@@ -12,12 +12,13 @@ public class Player_Movement : MonoBehaviour
     private SpriteRenderer sprite;
     private Animator anim;
     [SerializeField] private LayerMask jumpableGround;
+    private string currentState="";
 
     private float dirX= 0f;
     [SerializeField] private float moveSpeed= 7f;
     [SerializeField] private float jumpSpeed=14f;
 
-    private enum MovmentState {idle, running, jumping, falling};
+    private enum MovmentState {Player_idle, Player_run, Player_jump, Player_fall};
 
     private void Start()
     {
@@ -47,28 +48,47 @@ public class Player_Movement : MonoBehaviour
 
     private void updateAnimation(){
 
-        MovmentState state;
+        string state;
 
         if (dirX>0){
             sprite.flipX=false;
-            state=MovmentState.running;
+            state=nameof(MovmentState.Player_run);
         } else if (dirX<0){
             sprite.flipX=true;
-            state=MovmentState.running;
+            state=nameof(MovmentState.Player_run);
         } else {
-            state=MovmentState.idle;
+            state=nameof(MovmentState.Player_idle);
         }
 
         if (rb.velocity.y>0.1f){
-            state= MovmentState.jumping;
+            state= nameof(MovmentState.Player_jump);
         } else if (rb.velocity.y<-0.1f){
-            state = MovmentState.falling;
+            state = nameof(MovmentState.Player_fall);
         }
 
-        anim.SetInteger("PlayerState", (int)state);
+        ChangeAnimationState(state);
     }
 
     private bool isGrounded(){
         return Physics2D.BoxCast(coll.bounds.center, coll.bounds.size, 0f, Vector2.down, 0.1f, jumpableGround);
+    }
+
+    private void ChangeAnimationState(string newState)
+    {
+        if (isPlaying(anim,"Player_death")) return;
+        if (currentState==newState) return;
+
+        anim.Play(newState);
+        
+        currentState=newState;
+    }
+
+    private bool isPlaying(Animator anim, string stateName)
+    {
+    if (anim.GetCurrentAnimatorStateInfo(0).IsName(stateName) &&
+            anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f)
+        return true;
+    else
+        return false;
     }
 }
