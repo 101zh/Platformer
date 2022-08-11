@@ -20,6 +20,8 @@ public class Player_Movement : MonoBehaviour
 
     private enum MovmentState {Player_idle, Player_run, Player_jump, Player_fall};
 
+    [SerializeField] private AudioSource jumpSoundEffect;
+
     private void Start()
     {
         Debug.Log("Started");
@@ -38,7 +40,9 @@ public class Player_Movement : MonoBehaviour
         rb.velocity= new Vector2(moveSpeed*dirX,rb.velocity.y);
         
         if(Input.GetButtonDown("Jump") && isGrounded()){
+            jumpSoundEffect.Play();
             rb.velocity= new Vector3(rb.velocity.x,jumpSpeed,0);
+
             // Debug.Log("triggered");
         }
 

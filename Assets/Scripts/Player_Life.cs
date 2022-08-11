@@ -8,6 +8,8 @@ public class Player_Life : MonoBehaviour
     private Rigidbody2D rb;
     private Animator anim;
 
+    [SerializeField] private AudioSource deathSound;
+
     // Start is called before the first frame update
     private void Start()
     {
@@ -20,6 +22,7 @@ public class Player_Life : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Trap")){
             Die();
+            deathSound.Play();
             Debug.Log("Touched Trap");
         }
     }

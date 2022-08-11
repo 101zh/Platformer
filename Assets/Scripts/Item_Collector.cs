@@ -5,12 +5,14 @@ using UnityEngine.UI;
 public class Item_Collector : MonoBehaviour
 {
     private int cherries=0;
+    [SerializeField] private AudioSource pickupSound;
 
     [SerializeField] private Text cherriesText;
     private void OnTriggerEnter2D(Collider2D collision)
     {
 
         if (collision.gameObject.CompareTag("Cherry")){
+            pickupSound.Play();
             Destroy(collision.gameObject);
             cherries++;
             cherriesText.text = "Cherries: "+cherries;
