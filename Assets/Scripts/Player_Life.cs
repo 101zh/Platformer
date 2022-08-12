@@ -30,7 +30,8 @@ public class Player_Life : MonoBehaviour
     private void Die()
     {
         rb.bodyType= RigidbodyType2D.Static;
-        anim.SetTrigger("death");
+        anim.SetTrigger("dead");
+        anim.SetBool("isDead", true);
     }
 
     private void RestartLevel(){

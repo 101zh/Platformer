@@ -18,7 +18,7 @@ public class Player_Movement : MonoBehaviour
     [SerializeField] private float moveSpeed= 7f;
     [SerializeField] private float jumpSpeed=14f;
 
-    private enum MovmentState {Player_idle, Player_run, Player_jump, Player_fall};
+    private enum MovmentState {Player_idle, Player_run, Player_jump, Player_fall, Player_death};
 
     [SerializeField] private AudioSource jumpSoundEffect;
 
@@ -39,7 +39,7 @@ public class Player_Movement : MonoBehaviour
         dirX= Input.GetAxisRaw("Horizontal");
         rb.velocity= new Vector2(moveSpeed*dirX,rb.velocity.y);
         
-        if(Input.GetButtonDown("Jump") && isGrounded()){
+        if(Input.GetButtonDown("Jump") && isGrounded() && !anim.GetBool("isDead")){
             jumpSoundEffect.Play();
             rb.velocity= new Vector3(rb.velocity.x,jumpSpeed,0);
 
@@ -79,20 +79,10 @@ public class Player_Movement : MonoBehaviour
 
     private void ChangeAnimationState(string newState)
     {
-        if (isPlaying(anim,"Player_death")) return;
-        if (currentState==newState) return;
+        if (currentState==newState || anim.GetBool("isDead")) return;
 
         anim.Play(newState);
         
         currentState=newState;
-    }
-
-    private bool isPlaying(Animator anim, string stateName)
-    {
-    if (anim.GetCurrentAnimatorStateInfo(0).IsName(stateName) &&
-            anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f)
-        return true;
-    else
-        return false;
     }
 }
