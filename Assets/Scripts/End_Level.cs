@@ -25,9 +25,8 @@ public class End_Level : MonoBehaviour
         {
             levelEndSound.Play();
             levelCompleted=true;
+            anim.Play("Flag_unfurl");
             Invoke("CompleteLevel", 2f);
-
-
 
         }
     }
@@ -35,11 +34,6 @@ public class End_Level : MonoBehaviour
     private void CompleteLevel()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+1);
-    }
-
-    private void ChangeAnimationState(string newState)
-    {
-
     }
 
     private bool isPlaying(Animator anim, string stateName)
