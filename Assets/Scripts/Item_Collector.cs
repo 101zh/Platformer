@@ -8,6 +8,8 @@ public class Item_Collector : MonoBehaviour
     [SerializeField] private AudioSource pickupSound;
 
     [SerializeField] private Text cherriesText;
+
+    public static bool canDoubleJump=false;
     private void OnTriggerEnter2D(Collider2D collision)
     {
 
@@ -16,6 +18,12 @@ public class Item_Collector : MonoBehaviour
             Destroy(collision.gameObject);
             cherries++;
             cherriesText.text = "Cherries: "+cherries;
+        }
+
+        if (collision.gameObject.CompareTag("Double Jump Potion")){
+            pickupSound.Play();
+            Destroy(collision.gameObject);
+            canDoubleJump=true;
         }
     }
 }

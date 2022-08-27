@@ -12,13 +12,16 @@ public class Player_Movement : MonoBehaviour
     private SpriteRenderer sprite;
     private Animator anim;
     [SerializeField] private LayerMask jumpableGround;
+    private bool doubleJump;
     private string currentState="";
 
     private float dirX= 0f;
     [SerializeField] private float moveSpeed= 7f;
     [SerializeField] private float jumpSpeed=14f;
 
-    private enum MovmentState {Player_idle, Player_run, Player_jump, Player_fall, Player_death};
+    Item_Collector item_Collector;
+
+    private enum AnimState {Player_idle, Player_run, Player_jump, Player_fall, Player_death};
 
     [SerializeField] private AudioSource jumpSoundEffect;
 
@@ -36,18 +39,29 @@ public class Player_Movement : MonoBehaviour
     // Update is called once per frame 
     private void Update()
     {
+        bool canDoubleJump=Item_Collector.canDoubleJump;
+        doubleJump=doubleJump && canDoubleJump;
+
         dirX= Input.GetAxisRaw("Horizontal");
         rb.velocity= new Vector2(moveSpeed*dirX,rb.velocity.y);
-        
-        if(Input.GetButtonDown("Jump") && isGrounded() && !anim.GetBool("isDead")){
-            jumpSoundEffect.Play();
-            rb.velocity= new Vector3(rb.velocity.x,jumpSpeed,0);
 
-            // Debug.Log("triggered");
+        if (isGrounded() && !Input.GetButton("Jump")){
+            doubleJump=false;
         }
+
+        if(Input.GetButtonDown("Jump")){
+
+            if((isGrounded() || doubleJump) && !anim.GetBool("isDead")){
+                jumpSoundEffect.Play();
+                rb.velocity= new Vector3(rb.velocity.x,jumpSpeed,0);
+                doubleJump=!doubleJump;
+
+                // Debug.Log("triggered");
+            }
 
         updateAnimation();
 
+    }
     }
 
     private void updateAnimation(){
@@ -56,18 +70,18 @@ public class Player_Movement : MonoBehaviour
 
         if (dirX>0){
             sprite.flipX=false;
-            state=nameof(MovmentState.Player_run);
+            state=nameof(AnimState.Player_run);
         } else if (dirX<0){
             sprite.flipX=true;
-            state=nameof(MovmentState.Player_run);
+            state=nameof(AnimState.Player_run);
         } else {
-            state=nameof(MovmentState.Player_idle);
+            state=nameof(AnimState.Player_idle);
         }
 
         if (rb.velocity.y>0.1f){
-            state= nameof(MovmentState.Player_jump);
+            state= nameof(AnimState.Player_jump);
         } else if (rb.velocity.y<-0.1f){
-            state = nameof(MovmentState.Player_fall);
+            state = nameof(AnimState.Player_fall);
         }
 
         ChangeAnimationState(state);
