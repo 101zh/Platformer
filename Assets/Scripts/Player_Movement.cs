@@ -58,10 +58,9 @@ public class Player_Movement : MonoBehaviour
 
                 // Debug.Log("triggered");
             }
-
+        }
+        
         updateAnimation();
-
-    }
     }
 
     private void updateAnimation(){
@@ -83,7 +82,7 @@ public class Player_Movement : MonoBehaviour
         } else if (rb.velocity.y<-0.1f){
             state = nameof(AnimState.Player_fall);
         }
-
+        Debug.Log("state is: "+state);
         ChangeAnimationState(state);
     }
 
@@ -96,6 +95,7 @@ public class Player_Movement : MonoBehaviour
         if (currentState==newState || anim.GetBool("isDead")) return;
 
         anim.Play(newState);
+        Debug.Log("changed animation to: "+newState);
         
         currentState=newState;
     }
