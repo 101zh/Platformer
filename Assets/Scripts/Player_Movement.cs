@@ -18,8 +18,8 @@ public class Player_Movement : MonoBehaviour
     private string currentState="";
 
     private float dirX= 0f;
-    [SerializeField] private float moveSpeed=6f;
-    [SerializeField] private float jumpSpeed=8f;
+    [SerializeField] private float moveSpeed;
+    [SerializeField] private float jumpSpeed;
 
     Item_Collector item_Collector;
 
@@ -70,7 +70,7 @@ public class Player_Movement : MonoBehaviour
         
         if(Input.GetButtonDown("Use Ability")){
 
-            float teleportDistance=8f;
+            float teleportDistance=7f;
 
             if(sprite.flipX) teleportDistance*=-1;
 

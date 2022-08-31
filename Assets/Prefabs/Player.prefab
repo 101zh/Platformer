@@ -155,8 +155,8 @@ MonoBehaviour:
   jumpableGround:
     serializedVersion: 2
     m_Bits: 64
-  moveSpeed: 7
-  jumpSpeed: 14
+  moveSpeed: 6
+  jumpSpeed: 12
   jumpSoundEffect: {fileID: 3150742263876086684}
 --- !u!95 &3150742263876086681
 Animator:

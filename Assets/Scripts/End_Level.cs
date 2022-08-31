@@ -33,10 +33,10 @@ public class End_Level : MonoBehaviour
 
     private void CompleteLevel()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+1);
         Item_Collector.canDoubleJump=false;
         Item_Collector.canShootFire=false;
         Item_Collector.canTeleport=false;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+1);
     }
 
 }
