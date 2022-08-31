@@ -37,5 +37,8 @@ public class Player_Life : MonoBehaviour
     private void RestartLevel(){
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         rb.bodyType=RigidbodyType2D.Dynamic;
+        Item_Collector.canDoubleJump=false;
+        Item_Collector.canShootFire=false;
+        Item_Collector.canTeleport=false;
     }
 }

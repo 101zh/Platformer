@@ -10,6 +10,8 @@ public class Item_Collector : MonoBehaviour
     [SerializeField] private Text cherriesText;
 
     public static bool canDoubleJump=false;
+    public static bool canTeleport=false;
+    public static bool canShootFire=false;
     private void OnTriggerEnter2D(Collider2D collision)
     {
 
@@ -24,6 +26,25 @@ public class Item_Collector : MonoBehaviour
             pickupSound.Play();
             Destroy(collision.gameObject);
             canDoubleJump=true;
+            canTeleport=false;
+            canShootFire=false;
         }
+
+        if (collision.gameObject.CompareTag("Teleportation Potion")){
+            pickupSound.Play();
+            Destroy(collision.gameObject);
+            canDoubleJump=false;
+            canTeleport=true;
+            canShootFire=false;
+        }
+
+        if (collision.gameObject.CompareTag("Fireball Potion")){
+            pickupSound.Play();
+            Destroy(collision.gameObject);
+            canDoubleJump=false;
+            canTeleport=false;
+            canShootFire=true;
+        }
+
     }
 }

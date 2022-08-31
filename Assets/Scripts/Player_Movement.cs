@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player_Movement : MonoBehaviour
 {
@@ -16,8 +17,8 @@ public class Player_Movement : MonoBehaviour
     private string currentState="";
 
     private float dirX= 0f;
-    [SerializeField] private float moveSpeed= 7f;
-    [SerializeField] private float jumpSpeed=14f;
+    [SerializeField] private float moveSpeed=6f;
+    [SerializeField] private float jumpSpeed=8f;
 
     Item_Collector item_Collector;
 
@@ -39,8 +40,13 @@ public class Player_Movement : MonoBehaviour
     // Update is called once per frame 
     private void Update()
     {
+        // Double Jump Variable
         bool canDoubleJump=Item_Collector.canDoubleJump;
         doubleJump=doubleJump && canDoubleJump;
+        // Can Teleport Variable
+        bool canTeleport=Item_Collector.canTeleport;
+        // Can Shoot Fire variable
+        bool canShootFire=Item_Collector.canShootFire;
 
         dirX= Input.GetAxisRaw("Horizontal");
         rb.velocity= new Vector2(moveSpeed*dirX,rb.velocity.y);
@@ -60,6 +66,22 @@ public class Player_Movement : MonoBehaviour
             }
         }
         
+        if(Input.GetButtonDown("Use Ability")){
+
+            float teleportDistance=8f;
+
+            if(sprite.flipX) teleportDistance*=-1;
+
+            if (canTeleport){
+                Debug.Log("Teleported");
+                transform.position = new Vector3(transform.position.x+teleportDistance, transform.position.y, transform.position.z);
+            } else if (canShootFire){
+                Debug.Log("Shot Fire");
+            }
+        }
+
+        if(transform.position.y<=-10) SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+
         updateAnimation();
     }
 
@@ -82,7 +104,6 @@ public class Player_Movement : MonoBehaviour
         } else if (rb.velocity.y<-0.1f){
             state = nameof(AnimState.Player_fall);
         }
-        Debug.Log("state is: "+state);
         ChangeAnimationState(state);
     }
 
@@ -95,7 +116,6 @@ public class Player_Movement : MonoBehaviour
         if (currentState==newState || anim.GetBool("isDead")) return;
 
         anim.Play(newState);
-        Debug.Log("changed animation to: "+newState);
         
         currentState=newState;
     }
