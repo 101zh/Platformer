@@ -663,7 +663,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8545763944077196618, guid: 50300791d8e7edc46911404a04cdee9f, type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8545763944077196618, guid: 50300791d8e7edc46911404a04cdee9f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3463,6 +3463,24 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!1 &1592034463 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3150742263876086687, guid: 91b1d6f573339ac4f87d74ca7d488b5f, type: 3}
+  m_PrefabInstance: {fileID: 3150742262774660399}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1592034474
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1592034463}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0915793c678a3fe4e851bb747145b99b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tutorialText: {fileID: 2048309631}
 --- !u!1001 &1625301481
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3752,7 +3770,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3150742263876086676, guid: 91b1d6f573339ac4f87d74ca7d488b5f, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 3150742263876086676, guid: 91b1d6f573339ac4f87d74ca7d488b5f, type: 3}
       propertyPath: m_LocalPosition.x
