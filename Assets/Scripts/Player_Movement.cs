@@ -13,7 +13,8 @@ public class Player_Movement : MonoBehaviour
     private SpriteRenderer sprite;
     private Animator anim;
     [SerializeField] private LayerMask jumpableGround;
-    private bool doubleJump;
+    private bool canDoubleJump;
+    private bool doubleJumped;
     private string currentState="";
 
     private float dirX= 0f;
@@ -41,8 +42,7 @@ public class Player_Movement : MonoBehaviour
     private void Update()
     {
         // Double Jump Variable
-        bool canDoubleJump=Item_Collector.canDoubleJump;
-        doubleJump=doubleJump && canDoubleJump;
+        canDoubleJump=Item_Collector.canDoubleJump;
         // Can Teleport Variable
         bool canTeleport=Item_Collector.canTeleport;
         // Can Shoot Fire variable
@@ -52,17 +52,19 @@ public class Player_Movement : MonoBehaviour
         rb.velocity= new Vector2(moveSpeed*dirX,rb.velocity.y);
 
         if (isGrounded() && !Input.GetButton("Jump")){
-            doubleJump=false;
+            doubleJumped=false;
         }
 
-        if(Input.GetButtonDown("Jump")){
+        if(Input.GetButtonDown("Jump") && !anim.GetBool("isDead")){
 
-            if((isGrounded() || doubleJump) && !anim.GetBool("isDead")){
+            if(isGrounded()){
                 jumpSoundEffect.Play();
                 rb.velocity= new Vector3(rb.velocity.x,jumpSpeed,0);
-                doubleJump=!doubleJump;
+            } else if (canDoubleJump&&!doubleJumped){
 
-                // Debug.Log("triggered");
+                jumpSoundEffect.Play();
+                rb.velocity= new Vector3(rb.velocity.x,jumpSpeed,0);
+                doubleJumped=true;
             }
         }
         
