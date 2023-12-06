@@ -2705,7 +2705,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 4.778536
+  orthographic size: 5.901615
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -3468,11 +3468,11 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1267716775}
   - {fileID: 383718859}
   - {fileID: 1340609636}
   - {fileID: 1370539671}
   - {fileID: 672047216}
+  - {fileID: 1267716775}
   - {fileID: 39548595}
   m_Father: {fileID: 0}
   m_RootOrder: 8

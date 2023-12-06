@@ -71,12 +71,12 @@ public class Player_Movement : MonoBehaviour
         if(Input.GetButtonDown("Use Ability")){
 
             float teleportDistance=7f;
-
-            if(sprite.flipX) teleportDistance*=-1;
+            int facingDirection=1;
+            if(sprite.flipX) facingDirection=-1;
 
             if (canTeleport){
                 Debug.Log("Teleported");
-                transform.position = new Vector3(transform.position.x+teleportDistance, transform.position.y, transform.position.z);
+                teleport(teleportDistance, facingDirection, jumpableGround);
             } else if (canShootFire){
                 Debug.Log("Shot Fire");
             }
@@ -85,6 +85,19 @@ public class Player_Movement : MonoBehaviour
         if(transform.position.y<=-10) SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 
         updateAnimation();
+    }
+
+    private void teleport(float MaxTeleportDistance, int FacingDirection, LayerMask TerrainMask){
+        RaycastHit2D rayHit = Physics2D.Raycast(transform.position, new Vector2(FacingDirection, 0), MaxTeleportDistance, TerrainMask);
+        if (rayHit)
+        {
+            // RayCastHit2D.fraction will give you the length of the ray minus any collision depth
+            transform.Translate(new Vector3(FacingDirection * (MaxTeleportDistance-rayHit.fraction), 0, 0));
+        }
+        else
+        {
+            transform.Translate(new Vector3(FacingDirection * MaxTeleportDistance, 0, 0));
+        }
     }
 
     private void updateAnimation(){
